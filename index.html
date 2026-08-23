@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<title>음메모 UM MEMO</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="peekom-root" id="peekom-root">
+    <div class="peekom-side-tabs" id="peekom-side-tabs"></div>
+    <div class="peekom-panel" id="peekom-panel">
+      <div class="peekom-panel-header">
+        <div class="peekom-tabs-row" id="peekom-tabs-row"></div>
+        <div class="peekom-active-title" id="peekom-active-title" title="클릭해서 이름 수정" spellcheck="false"></div>
+        <button class="peekom-pin-btn" id="peekom-pin-btn" title="고정 (바깥을 클릭해도 안 닫힘)">📌</button>
+        <button class="peekom-add-btn" id="peekom-add-btn" title="새 인덱스 추가">＋</button>
+        <button class="peekom-close-btn" id="peekom-close-btn" title="닫기">✕</button>
+      </div>
+      <div class="peekom-toolbar">
+        <button data-cmd="bold" title="굵게"><b>B</b></button>
+        <button data-cmd="insertUnorderedList" title="목록">☰</button>
+        <button data-cmd="checklist" title="체크리스트">☑</button>
+        <button id="peekom-bg-btn" title="메모지 배경 (색·줄노트)">🎨</button>
+        <button id="peekom-alarm-btn" title="알림 예약 (날짜·시간)">⏰</button>
+        <button class="peekom-delete-btn" id="peekom-delete-btn" title="이 인덱스 삭제">삭제</button>
+      </div>
+      <div class="peekom-editor" id="peekom-editor" contenteditable="true" spellcheck="false"></div>
+    </div>
+  </div>
+  <script src="renderer.js"></script>
+</body>
+</html>

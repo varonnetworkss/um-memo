@@ -1,0 +1,41 @@
+{
+  "name": "um-memo",
+  "version": "1.0.0",
+  "description": "화면 우측 가장자리에 항상 떠 있는 메모 인덱스 — 음메모 UM MEMO (Windows 데스크톱 앱)",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.ummemo.app",
+    "productName": "음메모",
+    "win": {
+      "target": "nsis",
+      "icon": "icons/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "음메모",
+      "artifactName": "UM-MEMO-Setup-${version}.${ext}"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "index.html",
+      "renderer.js",
+      "style.css",
+      "icons/**/*"
+    ]
+  }
+}

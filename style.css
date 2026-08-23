@@ -1,0 +1,530 @@
+/* ===== 빼꼼 인덱스 — 모던 리스타일 ===== */
+:root {
+  --bg: #ffffff;
+  --surface: #fbfbfd;
+  --surface-2: #f4f4f7;
+  --border: #ececf1;
+  --border-strong: #e0e0e8;
+  --text: #26262b;
+  --text-soft: #6b6b76;
+  --text-faint: #a9a9b4;
+  --accent: #7c5cff;
+  --accent-soft: #efeafe;
+  --accent-strong: #6a48f0;
+  --radius: 16px;
+  --shadow: 0 12px 40px rgba(30, 25, 60, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  overflow: hidden;
+  font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text);
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.peekom-root {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---- 우측 옆면 세로 인덱스 탭 ---- */
+.peekom-side-tabs {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%) translateX(105%);
+  opacity: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 20;
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
+  -webkit-app-region: no-drag;
+}
+.peekom-side-tabs.reveal {
+  transform: translateY(-50%) translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.peekom-side-tab {
+  position: relative;
+  width: 34px;
+  min-height: 60px;
+  border: none;
+  border-radius: 14px 0 0 14px;
+  background: var(--tab-color, #7c5cff);
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 0;
+  box-shadow: -4px 4px 16px rgba(30, 25, 60, 0.2);
+  opacity: 0.9;
+  transition: width 0.16s ease, opacity 0.16s ease, box-shadow 0.16s ease;
+}
+.peekom-side-tab:hover {
+  opacity: 1;
+  width: 40px;
+}
+.peekom-side-tab.active {
+  width: 44px;
+  opacity: 1;
+  box-shadow: -5px 4px 22px rgba(30, 25, 60, 0.28);
+}
+.peekom-side-tab-label {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  letter-spacing: 1px;
+  font-size: 12.5px;
+  font-weight: 700;
+  max-height: 130px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+/* ---- 펼쳐지는 패널 ---- */
+.peekom-panel {
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  left: 8px;
+  right: 34px;
+  height: auto;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transform: translateX(115%);
+  visibility: hidden;
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0.32s;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  -webkit-app-region: no-drag;
+}
+.peekom-panel.open {
+  transform: translateX(0);
+  visibility: visible;
+  box-shadow: var(--shadow);
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s;
+}
+
+/* ---- 헤더 ---- */
+.peekom-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 12px 10px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.peekom-tabs-row {
+  display: none;
+}
+.peekom-active-title {
+  flex: 1;
+  font-size: 14.5px;
+  font-weight: 800;
+  letter-spacing: -0.2px;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: text;
+  padding: 3px 7px;
+  margin-left: -7px;
+  border-radius: 8px;
+  outline: none;
+  transition: background 0.14s ease, box-shadow 0.14s ease;
+}
+.peekom-active-title:hover {
+  background: var(--surface-2);
+}
+.peekom-active-title.editing {
+  background: #fff;
+  box-shadow: 0 0 0 2px var(--accent), 0 0 0 5px var(--accent-soft);
+  overflow: visible;
+  text-overflow: clip;
+}
+
+.peekom-add-btn,
+.peekom-close-btn,
+.peekom-pin-btn {
+  border: none;
+  background: transparent;
+  font-size: 15px;
+  width: 28px;
+  height: 28px;
+  border-radius: 9px;
+  cursor: pointer;
+  color: var(--text-soft);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.14s ease, color 0.14s ease;
+}
+.peekom-add-btn:hover,
+.peekom-close-btn:hover,
+.peekom-pin-btn:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+.peekom-add-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+.peekom-pin-btn {
+  font-size: 13px;
+  opacity: 0.5;
+  filter: grayscale(1);
+}
+.peekom-pin-btn.active {
+  opacity: 1;
+  filter: none;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* ---- 툴바 ---- */
+.peekom-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.peekom-toolbar button {
+  border: none;
+  background: transparent;
+  border-radius: 9px;
+  width: 30px;
+  height: 28px;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--text-soft);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.14s ease, color 0.14s ease;
+}
+.peekom-toolbar button:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+.peekom-rename-btn,
+.peekom-delete-btn {
+  width: auto !important;
+  padding: 0 10px !important;
+  font-size: 11.5px !important;
+  font-weight: 600;
+  height: 26px;
+  border-radius: 8px !important;
+}
+.peekom-rename-btn {
+  margin-left: auto;
+  background: var(--surface-2) !important;
+  color: var(--text-soft) !important;
+}
+.peekom-delete-btn {
+  margin-left: 4px;
+  color: #e0576b !important;
+}
+.peekom-delete-btn:hover {
+  background: #fdeef0 !important;
+}
+
+/* ---- 에디터 ---- */
+.peekom-editor {
+  flex: 1;
+  padding: 12px 18px;
+  overflow-y: auto;
+  font-size: 15px;
+  line-height: 28px;
+  color: var(--text);
+  outline: none;
+  user-select: text;
+}
+.peekom-editor::-webkit-scrollbar {
+  width: 8px;
+}
+.peekom-editor::-webkit-scrollbar-thumb {
+  background: #e2e2ea;
+  border-radius: 8px;
+}
+.peekom-editor:empty::before {
+  content: "여기에 메모를 적어보세요...";
+  color: var(--text-faint);
+}
+.peekom-link {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+  word-break: break-all;
+}
+.peekom-link:hover {
+  color: var(--accent-strong);
+}
+/* 줄노트 */
+.peekom-editor.lined {
+  background-image: repeating-linear-gradient(to bottom, transparent 0, transparent 27px, rgba(124, 92, 255, 0.14) 27px, rgba(124, 92, 255, 0.14) 28px);
+  background-origin: content-box;
+  background-attachment: local;
+}
+.peekom-editor.lined .peekom-check-line {
+  margin: 0;
+  min-height: 28px;
+}
+
+/* ---- 체크 항목 ---- */
+.peekom-check-line {
+  position: relative;
+  padding-left: 26px;
+  margin: 4px 0;
+}
+.peekom-check-line::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 17px;
+  height: 17px;
+  border: 2px solid #cfcfda;
+  border-radius: 6px;
+  box-sizing: border-box;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.14s ease;
+}
+.peekom-check-line.checked::before {
+  content: "✓";
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  text-align: center;
+  line-height: 14px;
+}
+.peekom-check-line.checked {
+  text-decoration: line-through;
+  color: var(--text-faint);
+}
+
+/* ---- 공통 팝업 카드 ---- */
+.peekom-bg-pop,
+.peekom-alarm-pop,
+.peekom-inline-prompt {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 14px;
+  animation: peekomPop 0.16s ease;
+}
+@keyframes peekomPop {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.peekom-bg-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: var(--text-soft);
+  margin-bottom: 8px;
+}
+.peekom-bg-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 10px;
+}
+.peekom-bg-sw {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  border: 1px solid var(--border-strong);
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.12s ease;
+}
+.peekom-bg-sw:hover {
+  transform: scale(1.08);
+}
+.peekom-bg-sw.on {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+.peekom-tabcolor-sw {
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  border: 1px solid var(--border-strong);
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.12s ease;
+}
+.peekom-tabcolor-sw:hover {
+  transform: scale(1.1);
+}
+.peekom-tabcolor-sw.on {
+  outline: 2px solid #33333a;
+  outline-offset: 1px;
+}
+.peekom-tabcolor-custom {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  border: 1px dashed #c3c3cf;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  cursor: pointer;
+  overflow: hidden;
+}
+.peekom-tabcolor-custom input[type="color"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.peekom-bg-lined {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12.5px;
+  color: var(--text-soft);
+  cursor: pointer;
+}
+.peekom-bg-lined input {
+  accent-color: var(--accent);
+}
+
+/* ---- 이름 변경 입력창 ---- */
+.peekom-ip-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-soft);
+  margin-bottom: 7px;
+}
+.peekom-ip-row {
+  display: flex;
+  gap: 7px;
+}
+.peekom-ip-input {
+  flex: 1;
+  border: 1px solid var(--border-strong);
+  border-radius: 9px;
+  padding: 7px 10px;
+  font-size: 13px;
+  outline: none;
+  transition: border 0.14s ease, box-shadow 0.14s ease;
+}
+.peekom-ip-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.peekom-ip-ok {
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 9px;
+  padding: 0 14px;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.14s ease;
+}
+.peekom-ip-ok:hover {
+  background: var(--accent-strong);
+}
+
+/* ---- 알림 예약 팝업 ---- */
+.peekom-alarm-for {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.peekom-alarm-dt,
+.peekom-alarm-text {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--border-strong);
+  border-radius: 9px;
+  padding: 7px 10px;
+  font-size: 12.5px;
+  margin-bottom: 7px;
+  outline: none;
+  transition: border 0.14s ease, box-shadow 0.14s ease;
+}
+.peekom-alarm-dt:focus,
+.peekom-alarm-text:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.peekom-alarm-set {
+  width: 100%;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 9px;
+  padding: 8px;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.14s ease;
+}
+.peekom-alarm-set:hover {
+  background: var(--accent-strong);
+}
+.peekom-alarm-list {
+  margin-top: 10px;
+}
+.peekom-alarm-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-soft);
+  padding: 6px 0;
+  border-top: 1px solid var(--border);
+}
+.peekom-alarm-del {
+  border: none;
+  background: transparent;
+  color: #e0576b;
+  cursor: pointer;
+  font-size: 12px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  width: 22px;
+  height: 22px;
+}
+.peekom-alarm-del:hover {
+  background: #fdeef0;
+}
+.peekom-alarm-empty {
+  font-size: 11.5px;
+  color: var(--text-faint);
+  padding: 6px 0;
+}
