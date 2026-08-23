@@ -1,0 +1,30 @@
+name: Build UM MEMO installer
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:   # GitHub 웹에서 수동으로 빌드 버튼 누를 수 있게
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: 코드 가져오기
+        uses: actions/checkout@v4
+
+      - name: Node 설치
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 의존성 설치
+        run: npm install
+
+      - name: 설치파일 빌드 (electron-builder)
+        run: npm run dist
+
+      - name: 설치파일 업로드 (다운로드용)
+        uses: actions/upload-artifact@v4
+        with:
+          name: UM-MEMO-Setup
+          path: dist/*.exe
