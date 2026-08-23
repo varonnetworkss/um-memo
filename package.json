@@ -1,11 +1,12 @@
 {
   "name": "um-memo",
   "version": "1.0.0",
-  "description": "화면 우측 가장자리에 항상 떠 있는 메모 인덱스 — 음메모 UM MEMO (Windows 데스크톱 앱)",
+  "description": "음메모 UM MEMO - always-on-edge memo index (Windows/macOS)",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dist": "electron-builder --win --publish never"
+    "dist": "electron-builder --win --publish never",
+    "dist:mac": "electron-builder --mac --publish never"
   },
   "author": "",
   "license": "MIT",
@@ -19,6 +20,17 @@
     "win": {
       "target": "nsis",
       "icon": "icon.ico"
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": "universal"
+        }
+      ],
+      "icon": "icon.png",
+      "category": "public.app-category.productivity",
+      "identity": null
     },
     "nsis": {
       "oneClick": false,
