@@ -102,7 +102,7 @@ ipcMain.on("set-ignore-mouse-events", (e, ignore, options) => {
 });
 
 function createTray() {
-  const icon = nativeImage.createFromPath(path.join(__dirname, "icons", "icon16.png"));
+  const icon = nativeImage.createFromPath(path.join(__dirname, "icon16.png"));
   tray = new Tray(icon);
   const contextMenu = Menu.buildFromTemplate([
     {

@@ -18,7 +18,7 @@
     "productName": "음메모",
     "win": {
       "target": "nsis",
-      "icon": "icons/icon.ico"
+      "icon": "icon.ico"
     },
     "nsis": {
       "oneClick": false,
@@ -35,7 +35,9 @@
       "index.html",
       "renderer.js",
       "style.css",
-      "icons/**/*"
+      "icon.ico",
+      "icon.png",
+      "icon16.png"
     ]
   }
 }
